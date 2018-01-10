@@ -6,10 +6,10 @@ class Book extends React.Component {
         book: this.props.book
     }
 
-    changeShelve = (newShelve) => {
-        this.setState((newShelve) => ({
-            book: this.state.book.shelf = newShelve
-        }))
+    updateBook = (newShelve) => {
+        let newBook = this.state.book
+        newBook.shelf = newShelve
+        this.props.onUpdateBook(newBook)
     }
 
     render(){
@@ -17,20 +17,21 @@ class Book extends React.Component {
 
         <div className="book">
             <div className="book-top">
-            {/* <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")' }}></div> */}
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("' + this.props.book.imageLinks.thumbnail + '")' }}></div>
+            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("' + this.state.book.imageLinks.thumbnail + '")' }}></div>
             <div className="book-shelf-changer">
                 <select>
                 <option value="none" disabled>Move to...</option>
-                <option onClick={() => this.changeShelve("currentlyReading")} value="currentlyReading">Currently Reading</option>
-                <option  value="wantToRead">Want to Read</option>
-                <option  value="read">Read</option>
-                <option value="none">None</option>
+                
+                <option selected={this.state.book.shelf === "currentlyReading" ? "selected" : ""} onClick={() => this.updateBook("currentlyReading")} value="currentlyReading">Currently Reading</option>
+                <option selected={this.state.book.shelf === "wantToRead" ? "selected" : ""} onClick={() => this.updateBook("wantToRead")}  value="wantToRead">Want to Read</option>
+                <option selected={this.state.book.shelf === "read" ? "selected" : ""} onClick={() => this.updateBook("read")}  value="read">Read</option>
+
+                <option onClick={() => this.updateBook("none")} value="none">None</option>
                 </select>
             </div>
             </div>
-            <div className="book-title">{this.props.book.title}</div>
-            <div className="book-authors">{this.props.book.authors[0]}</div>
+            <div className="book-title">{this.state.book.title}</div>
+            <div className="book-authors">{this.state.book.authors[0]}</div>
         </div>
         )
     }

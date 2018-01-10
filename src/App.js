@@ -15,10 +15,21 @@ class BooksApp extends React.Component {
     myReads: []
   }
 
+  updateBook = (book) => {
+    let books = this.state.myReads.filter((c) => c.id !== book.id)
+    books.unshift(book)
+
+    this.setState({
+      myReads: books
+    })
+  }
+
   componentDidMount() {
     BooksAPI.getAll().then(myReads => {
       this.setState({ myReads })
     })
+
+    
 
   }
   render() {
@@ -54,9 +65,9 @@ class BooksApp extends React.Component {
             <div className="list-books-content">
               <div>
                 
-              <Bookshelf title={"Currently Reading"} books={this.state.myReads.filter( (book) => book.shelf === "currentlyReading")}/>
-              <Bookshelf title={"Want to Read"} books={this.state.myReads.filter( (book) => book.shelf === "wantToRead")}/>
-              <Bookshelf title={"Read"} books={this.state.myReads.filter( (book) => book.shelf === "read")}/>
+              <Bookshelf onUpdateBook={this.updateBook} title={"Currently Reading"} books={this.state.myReads.filter( (book) => book.shelf === "currentlyReading")}/>
+              <Bookshelf  onUpdateBook={this.updateBook} title={"Want to Read"} books={this.state.myReads.filter( (book) => book.shelf === "wantToRead")}/>
+              <Bookshelf  onUpdateBook={this.updateBook} title={"Read"} books={this.state.myReads.filter( (book) => book.shelf === "read")}/>
 
               </div>
             </div>

@@ -8,7 +8,7 @@ const BookList = (props) => (
 
         {props.books.map((book) => (
             <li key={book.id}>
-                <Book book={book} />
+                <Book onUpdateBook={props.updateBook} book={book} />
             </li>
         ))}
 

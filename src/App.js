@@ -1,18 +1,12 @@
 import React from 'react'
+import { Link, Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Bookshelf from './components/Bookshelf'
 import SearchBook from './components/SearchBook';
 
 class BooksApp extends React.Component {
-  state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false,
+  state = {   
     myReads: []
   }
 
@@ -42,19 +36,8 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <div className="search-books">
-            <div className="search-books-bar">
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
 
-                <SearchBook  onUpdateBook={this.updateBook} />
-
-            </div>
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
-          </div>
-        ) : (
+        <Route exact path="/" render={() => (
           <div className="list-books">
             <div className="list-books-title">
               <h1>My Reads - Edmundo</h1>
@@ -70,10 +53,27 @@ class BooksApp extends React.Component {
               </div>
             </div>
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <Link to="/search" >Add a book</Link>
             </div>
           </div>
-        )}
+        )}/>
+
+        <Route path="/search" render={() => (
+
+          <div className="search-books">
+            <div className="search-books-bar">
+              <Link to="/" className="close-search" >Close</Link>
+
+                <SearchBook  onUpdateBook={this.updateBook} books={this.state.myReads} />
+
+            </div>
+            <div className="search-books-results">
+              <ol className="books-grid"></ol>
+            </div>
+          </div>
+
+        )} />        
+        
       </div>
     )
   }

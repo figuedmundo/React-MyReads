@@ -20,12 +20,10 @@ class Book extends React.Component {
             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("' + this.state.book.imageLinks.thumbnail + '")' }}></div>
             <div className="book-shelf-changer">
                 <select value={this.state.book.shelf}>
-                    <option value="none" disabled>Move to...</option>
-                    
+                    <option value="disabled" disabled>Move to...</option>
                     <option  onClick={() => this.updateBook("currentlyReading")} value="currentlyReading">Currently Reading</option>
                     <option  onClick={() => this.updateBook("wantToRead")}  value="wantToRead">Want to Read</option>
                     <option  onClick={() => this.updateBook("read")}  value="read">Read</option>
-
                     <option  onClick={() => this.updateBook("none")} value="none">None</option>
                 </select>
             </div>

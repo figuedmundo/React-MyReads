@@ -18,16 +18,19 @@ class SearchBook extends React.Component {
       searchTerm: event.target.value
     })
 
-    BooksAPI.search(this.state.searchTerm).then(searchBooks => {
+    if (event.target.value !== "") {
+    
+      BooksAPI.search(this.state.searchTerm).then(searchBooks => {
 
-      // change the shelf value if the book is already in the bookshelf
-      searchBooks.forEach(element => {
-        let book = this.props.books.filter( (b) => b.id === element.id )
-        element.shelf = book[0] !== undefined ? book[0].shelf : "none"
-      });      
+        // change the shelf value if the book is already in the bookshelf
+        searchBooks.forEach(element => {
+          let book = this.props.books.filter( (b) => b.id === element.id )
+          element.shelf = book[0] !== undefined ? book[0].shelf : "none"
+        });      
 
-      this.setState({ searchBooks })
-    })    
+        this.setState({ searchBooks })
+      })
+    }    
   }
 
   render(){

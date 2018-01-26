@@ -11,7 +11,8 @@ First Project for React Develpment course by Udacity
 
 1. Clone Repository
 2. Go to folder downloaded
-3. run `$ npm start`
+3. `$ npm install`
+3. `$ npm start`
 4. Have Fun!
 
 # Features

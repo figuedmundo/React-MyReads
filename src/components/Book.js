@@ -2,12 +2,8 @@ import React from 'react'
 
 class Book extends React.Component {
 
-    state = {
-        book: this.props.book
-    }
-
     updateBook = (newShelve) => {
-        let newBook = this.state.book
+        let newBook = this.props.book
         newBook.shelf = newShelve
         this.props.onUpdateBook(newBook)
     }
@@ -17,19 +13,19 @@ class Book extends React.Component {
 
         <div className="book">
             <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("' + this.state.book.imageLinks.thumbnail + '")' }}></div>
+            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("' +  this.props.book.imageLinks.thumbnail + '")' }}></div>
             <div className="book-shelf-changer">
-                <select value={this.state.book.shelf}>
-                    <option value="disabled" disabled>Move to...</option>
-                    <option  onClick={() => this.updateBook("currentlyReading")} value="currentlyReading">Currently Reading</option>
-                    <option  onClick={() => this.updateBook("wantToRead")}  value="wantToRead">Want to Read</option>
-                    <option  onClick={() => this.updateBook("read")}  value="read">Read</option>
-                    <option  onClick={() => this.updateBook("none")} value="none">None</option>
+                <select onChange={event=>this.updateBook(event.target.value)} value={this.props.book.shelf}>
+                    <option  value="disabled" disabled>Move to...</option>
+                    <option  value="currentlyReading">Currently Reading</option>
+                    <option  value="wantToRead">Want to Read</option>
+                    <option  value="read">Read</option>
+                    <option  value="none">None</option>
                 </select>
             </div>
             </div>
-            <div className="book-title">{this.state.book.title}</div>
-            <div className="book-authors">{this.state.book.authors[0]}</div>
+            <div className="book-title">{this.props.book.title}</div>
+            <div className="book-authors">{this.props.book.authors ? this.props.book.authors[0] : ""}</div>
         </div>
         )
     }
